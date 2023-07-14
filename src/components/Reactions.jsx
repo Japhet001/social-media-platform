@@ -1,0 +1,68 @@
+import React, { useContext } from "react";
+import {
+  FaComment,
+  FaEdit,
+  FaHeart,
+  FaSave,
+  FaShare,
+  FaTrash,
+  FaVoteYea,
+} from "react-icons/fa";
+import { Context } from "../context/userContext";
+import { domain } from "../utils/Utils";
+
+const Reactions = ({ showComments, showUpdateForm, idea }) => {
+  const { user } = useContext(Context);
+
+  const deleteIdea = async (id) => {
+    try {
+      // Delete idea logic
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  return (
+    <div className="reactions">
+      <button className="reactions__btn">
+        <FaHeart style={{ color: "#00ffc8" }} className="reactions__btn-icon" />
+        <span className="votes">{idea?.votes}</span>
+      </button>
+      <button className="reactions__btn" onClick={() => showComments()}>
+        <FaComment className="reactions__btn-icon" />
+        <span>comment</span>
+      </button>
+      {user.user_id === idea.user_id ? (
+        <button
+          className="reactions__btn"
+          onClick={() => deleteIdea(idea.idea_id)}
+        >
+          <FaTrash style={{ color: "#00ffc8" }} className="reactions__btn-icon" />
+          <span>delete</span>
+        </button>
+      ) : (
+        <button className="reactions__btn">
+          <FaShare className="reactions__btn-icon" />
+          <span>share</span>
+        </button>
+      )}
+      <button className="reactions__btn">
+        <FaVoteYea className="reactions__btn-icon" />
+        <span>votes</span>
+      </button>
+      {user.user_id === idea.user_id ? (
+        <button className="reactions__btn" onClick={() => showUpdateForm()}>
+          <FaEdit className="reactions__btn-icon" />
+          <span>edit</span>
+        </button>
+      ) : (
+        <button className="reactions__btn">
+          <FaSave className="reactions__btn-icon" />
+          <span>Save</span>
+        </button>
+      )}
+    </div>
+  );
+};
+
+export default Reactions;
